@@ -40,7 +40,7 @@ def past_days_news(request, past_date):
     if date == dt.date.today():
         return redirect(news_today)
 
-    return render(request, 'all-news/past-news.html', {"date": date})
+    return render(request, 'all-news/past_news.html', {"date": date})
 
 def news_today(request):
     date = dt.date.today()
