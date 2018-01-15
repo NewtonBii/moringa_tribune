@@ -11,14 +11,8 @@ def news_of_day(request):
     """Function to convert date objects to find the exact day"""
     day = convert_dates(date)
 
-    html = f'''
-        <html>
-            <body>
-            <h1>{date.day}-{date.month}-{date.year}</h1>
-            </body>
-        </html>
-            '''
-    return HttpResponse(html)
+
+    return render(request, 'all_news/today_news.html', {'date':date,})
 
 def convert_dates(dates):
     """Function that gets the weekday number for the date"""
