@@ -15,6 +15,9 @@ class Editor(models.Model):
     def save_editor(self):
         self.save()
 
+    def delete_editor(self):
+        self.delete()
+
 class tags(models.Model):
     name = models.CharField(max_length=30)
 
@@ -27,5 +30,3 @@ class Article(models.Model):
     editor = models.ForeignKey(Editor)
     tags = models.ManyToManyField(tags)
     published_date = models.DateTimeField(auto_now_add=True)
-
-    
