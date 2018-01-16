@@ -12,6 +12,9 @@ class Editor(models.Model):
     class Meta:
         ordering = ['first_name']
 
+    def save_editor(self):
+        self.save()
+
 class tags(models.Model):
     name = models.CharField(max_length=30)
 
@@ -24,3 +27,5 @@ class Article(models.Model):
     editor = models.ForeignKey(Editor)
     tags = models.ManyToManyField(tags)
     published_date = models.DateTimeField(auto_now_add=True)
+
+    
