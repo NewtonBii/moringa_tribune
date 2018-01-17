@@ -3,22 +3,16 @@ from django.http import HttpResponse, Http404
 import datetime as dt
 from .models import Article
 
+def search_results(request):
+    if 'article' in request.GET and request.GET['article']:
+        search_term = request.GET.get('article')
+        searched_article = Article.search_by_title(search_term)
+        message = f"{search_term}"
+        return render(request, 'all_news/search.html', {"message":message, "articles":searched_article})
+    else:
+        message = 'You haven\'t searched for any article.'
+        return render(request, 'all_news/search.html', {"message":message})
 
-# def news_of_day(request):
-#     date = dt.date.today()
-#     """Function to convert date objects to find the exact day"""
-#     day = convert_dates(date)
-#
-#     return render(request, 'all_news/today_news.html', {'date':date,})
-
-# def convert_dates(dates):
-#     """Function that gets the weekday number for the date"""
-#     day_number = dt.date.weekday(dates)
-#     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-#
-#     """Returning the actual day of the week"""
-#     day = days[day_number]
-#     return day
 
 def past_days_news(request, past_date):
     try:
