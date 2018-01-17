@@ -27,7 +27,7 @@ def past_days_news(request, past_date):
     except ValueError:
         """Raise 404 error when ValueError is thrown"""
         raise Http404()
-    assert False
+        assert False
 
     if date == dt.date.today():
         return redirect(news_today)
