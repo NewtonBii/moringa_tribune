@@ -3,6 +3,14 @@ from django.http import HttpResponse, Http404
 import datetime as dt
 from .models import Article
 
+
+def article(request):
+    try:
+        article = Article.objects.get(id = article_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request, "all_news/article.html", {"article":article})
+
 def search_results(request):
     if 'article' in request.GET and request.GET['article']:
         search_term = request.GET.get('article')
