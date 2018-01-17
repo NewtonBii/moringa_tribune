@@ -4,9 +4,11 @@
 
   <div class="row">
     {% if articles%}
-      <h2>Found {{ articles|length }} of searched term {{message}}</h2>
+    <div class="well">
+      <h2>Found: <span style="color:blue">{{ articles|length }}</span> articles matching your search {{message}}</h2>
+    </div>
     {% else %}
-      <h2> Found 0 articles for the search term {{message}}</h2>
+      <h2>No articles Found with <span style="color:blue">{{message}}</span> keyword. Try other keyword</h2>
     {% endif %}
 
   </div>
