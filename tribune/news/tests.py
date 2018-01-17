@@ -23,22 +23,33 @@ class EditorTestClass(TestCase):
     #     self.newton.delete_editor()
 
 
-# class ArticleTestClass(TestCase):
-#     #Set up method
-#     def setUp(self):
-#
-#         editor = Editor(first_name='newton', last_name='bii', email='biinewtondev@gmail.com')
-#         date = dt.date.today()
-#
-#         self.article = Article(title = 'Article', post = 'I like to pray everyday',
-#         editor = editor, tags= 'pray', published_date=date)
-#
-#     #testing of artcile object is an instance of Article Class
-#     def test_instance(self):
-#         self.assertTrue(isinstance(self.article, Article))
-#
-#     #test the save article method in article class
-#     def test_save_method(self):
-#         self.article.save_article()
-#         articles = Article.objects.all()
-#         self.assertTrue(len(articles)>0)
+class ArticleTestClass(TestCase):
+    #Creating a nee editor and saving it.
+    def setUp(self):
+        self.newton = Editor(first_name='newton', last_name='bii', email='biinewtondev@gmail.com')
+        self.newton.save_editor()
+
+        #Creating a new tag and saving it
+        self.new_tag = tags(name='testing')
+        self.new_tag.save()
+
+        self.new_article = Article(title = 'Test Article',post = 'A test post',editor = self.newton)
+        self.new_article.save()
+
+        self.new_article.tags.add(self.new_tag)
+
+
+    def tearDown(self):
+        Editor.objects.all().delete()
+        tags.objects.all().delete()
+        Article.objects.all().delete()
+
+    def test_get_news_today(self):
+        today_news = Article.todays_news()
+        self.assertTrue(len(today_news)>0)
+
+    def test_get_news_by_date(self):
+        test_date = '2017-03-17'
+        date = dt.datetime.strptime(test_date, '%Y-%m-%d').date()
+        news_by_date = Article.days_news(date)
+        self.assertTrue(len(news_by_date) == 0)
