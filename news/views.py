@@ -1,19 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from django.core.exceptions import ObjectDoesNotExist
 import datetime as dt
 from .models import Article
-from .forms import NewsLetterForm
 
 
-def article(request, article_id):
-    try:
-        article = Article.objects.get(id = article_id)
-    except DoesNotExist:
-        raise Http404()
+def article(request):
+    article = Article.objects.get(id = article_id)
     return render(request, "all_news/article.html", {"article":article})
 
-def search_results(request):/admin/
+def search_results(request):
     if 'article' in request.GET and request.GET['article']:
         search_term = request.GET.get('article')
         searched_article = Article.search_by_title(search_term)
@@ -42,10 +37,4 @@ def past_days_news(request, past_date):
 def news_today(request):
     news = Article.todays_news()
     date = dt.date.today()
-    if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
-        if form.is_valid():
-            print('valid')
-    else:
-        form = NewsLetterForm()
-    return render(request, 'all_news/today_news.html', {'date':date,"news":news, 'letterForm':form})
+    return render(request, 'all_news/today_news.html', {'date':date,"news":news})

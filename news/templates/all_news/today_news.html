@@ -1,4 +1,5 @@
 {% extends 'all_news/base.html' %}
+{% load bootstrap3 %}
 
 {% block content %}
 {{ block.super }}
@@ -6,6 +7,12 @@
 <div class="container">
 
   <!-- Looping through news   -->
+  <form  action="{%url 'newsToday'%}" method="post">
+    {%csrf_token%}
+
+    {% bootstrap_form letterForm layout='inline' %}
+    <input type="submit" value="Subscribe">
+  </form>
   {% for news_item in news %}
 
   <div class="row">
@@ -14,7 +21,8 @@
       <img src="{{news_item.article_image.url}}" class="img-responsive" alt="Image">
     </div>
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-      <h2 class="text-center"> {{ news_item.titl }} </h2>
+      <a href="{% url 'myArticle' news_item.id %}"><h2 class="text-center"> {{ news_item.title }} </h2></a>
+
       <p>{{news_item.post}}</p>
 
 
