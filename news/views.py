@@ -4,9 +4,11 @@ import datetime as dt
 from .models import Article, NewsLetterRecipients
 from .forms import NewsLetterForm
 from .email import send_welcome_email
+from django.contrib.auth.decorators import login_required
 
 
-def article(request):
+@login_required(login_url = '/accounts/login')
+def article(request, article_id):
     article = Article.objects.get(id = article_id)
     return render(request, "all_news/article.html", {"article":article})
 
